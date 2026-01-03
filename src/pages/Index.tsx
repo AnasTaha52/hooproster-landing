@@ -1,11 +1,9 @@
 import { Helmet } from "react-helmet-async";
-import Navbar from "@/components/Navbar";
-import Hero from "@/components/Hero";
-import Features from "@/components/Features";
-import Pricing from "@/components/Pricing";
-import Newsletter from "@/components/Newsletter";
-import Footer from "@/components/Footer";
-import StickyMobileCTA from "@/components/StickyMobileCTA";
+import DashboardLayout from "@/components/dashboard/DashboardLayout";
+import HeroBanner from "@/components/dashboard/HeroBanner";
+import ScoutingReports from "@/components/dashboard/ScoutingReports";
+import ServiceExplanation from "@/components/dashboard/ServiceExplanation";
+import PricingCard from "@/components/dashboard/PricingCard";
 
 const Index = () => {
   return (
@@ -23,15 +21,12 @@ const Index = () => {
         <link rel="canonical" href="https://hooproster.substack.com" />
       </Helmet>
 
-      <main className="min-h-screen bg-background pb-20 md:pb-0">
-        <Navbar />
-        <Hero />
-        <Features />
-        <Pricing />
-        <Newsletter />
-        <Footer />
-        <StickyMobileCTA />
-      </main>
+      <DashboardLayout>
+        <HeroBanner />
+        <ScoutingReports />
+        <ServiceExplanation />
+        <PricingCard />
+      </DashboardLayout>
     </>
   );
 };
