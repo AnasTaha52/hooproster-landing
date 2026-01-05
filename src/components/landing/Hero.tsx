@@ -1,10 +1,21 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-
-const SUBSTACK_URL = "https://hooproster.substack.com";
+import useSiteContent from "@/hooks/useSiteContent";
 
 const Hero = () => {
+  const { content, loading } = useSiteContent();
+
+  if (loading || !content) {
+    return (
+      <section className="relative min-h-screen flex items-center justify-center">
+        <div className="animate-pulse text-muted-foreground">Loading...</div>
+      </section>
+    );
+  }
+
+  const { hero, stats, global } = content;
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       {/* Background Effects */}
@@ -26,19 +37,19 @@ const Hero = () => {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-8"
           >
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            <span className="text-sm font-medium text-primary">Now on Substack</span>
+            <span className="text-sm font-medium text-primary">{hero.badge}</span>
           </motion.div>
 
-          {/* Headline */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-[1.1]">
-            Elite Basketball Scouting.
+          {/* Headline - handles overflow gracefully */}
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-[1.1] break-words">
+            {hero.mainHeadline}
             <br />
-            <span className="text-gradient">Delivered to Your Inbox.</span>
+            <span className="text-gradient">{hero.mainHeadlineAccent}</span>
           </h1>
 
           {/* Subheadline */}
           <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
-            The professional data and evaluation tools used by scouts, now available for everyone via Substack.
+            {hero.subHeadline}
           </p>
 
           {/* CTAs */}
@@ -53,8 +64,8 @@ const Hero = () => {
               size="lg"
               className="bg-primary text-primary-foreground hover:bg-primary/90 glow-primary px-8 h-12 text-base font-semibold"
             >
-              <a href={SUBSTACK_URL} target="_blank" rel="noopener noreferrer">
-                Get Started
+              <a href={global.substackUrl} target="_blank" rel="noopener noreferrer">
+                {hero.ctaText}
                 <ArrowRight className="ml-2 w-5 h-5" />
               </a>
             </Button>
@@ -65,7 +76,7 @@ const Hero = () => {
               className="border-border bg-secondary/50 hover:bg-secondary px-8 h-12 text-base font-semibold"
             >
               <a href="#features">
-                Learn More
+                {hero.secondaryCtaText}
               </a>
             </Button>
           </motion.div>
@@ -78,16 +89,18 @@ const Hero = () => {
           transition={{ delay: 0.5, duration: 0.5 }}
           className="mt-20 grid grid-cols-3 gap-8 max-w-lg mx-auto"
         >
-          {[
-            { value: "500+", label: "Subscribers" },
-            { value: "200+", label: "Reports" },
-            { value: "50+", label: "Prospects" },
-          ].map((stat) => (
-            <div key={stat.label} className="text-center">
-              <div className="text-2xl sm:text-3xl font-bold text-primary">{stat.value}</div>
-              <div className="text-sm text-muted-foreground mt-1">{stat.label}</div>
-            </div>
-          ))}
+          <div className="text-center">
+            <div className="text-2xl sm:text-3xl font-bold text-primary">{stats.subscribersCount}</div>
+            <div className="text-sm text-muted-foreground mt-1">{stats.subscribersLabel}</div>
+          </div>
+          <div className="text-center">
+            <div className="text-2xl sm:text-3xl font-bold text-primary">{stats.reportsCount}</div>
+            <div className="text-sm text-muted-foreground mt-1">{stats.reportsLabel}</div>
+          </div>
+          <div className="text-center">
+            <div className="text-2xl sm:text-3xl font-bold text-primary">{stats.prospectsCount}</div>
+            <div className="text-sm text-muted-foreground mt-1">{stats.prospectsLabel}</div>
+          </div>
         </motion.div>
       </div>
 

@@ -1,10 +1,23 @@
 import { ArrowRight, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-
-const SUBSTACK_URL = "https://hooproster.substack.com";
+import useSiteContent from "@/hooks/useSiteContent";
 
 const Newsletter = () => {
+  const { content, loading } = useSiteContent();
+
+  if (loading || !content) {
+    return (
+      <section className="py-24 relative">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="animate-pulse text-muted-foreground">Loading...</div>
+        </div>
+      </section>
+    );
+  }
+
+  const { newsletter, global } = content;
+
   return (
     <section className="py-24 relative">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -23,11 +36,11 @@ const Newsletter = () => {
               <Mail className="w-8 h-8 text-primary" />
             </div>
 
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">
-              Join 500+ Scouts & Analysts
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4 break-words">
+              {newsletter.headline}
             </h2>
             <p className="text-muted-foreground max-w-lg mx-auto mb-8">
-              Get professional scouting reports delivered to your inbox. Start with our free weekly roundup.
+              {newsletter.subheadline}
             </p>
 
             <Button
@@ -35,14 +48,14 @@ const Newsletter = () => {
               size="lg"
               className="bg-primary text-primary-foreground hover:bg-primary/90 glow-primary px-8 h-12 font-semibold"
             >
-              <a href={SUBSTACK_URL} target="_blank" rel="noopener noreferrer">
-                Subscribe on Substack
+              <a href={global.substackUrl} target="_blank" rel="noopener noreferrer">
+                {newsletter.ctaText}
                 <ArrowRight className="ml-2 w-5 h-5" />
               </a>
             </Button>
 
             <p className="text-xs text-muted-foreground mt-4">
-              Free to subscribe. Upgrade anytime.
+              {newsletter.footnote}
             </p>
           </div>
         </motion.div>

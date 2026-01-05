@@ -1,43 +1,23 @@
 import { Lock, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-
-const SUBSTACK_URL = "https://hooproster.substack.com";
-
-const reports = [
-  {
-    title: "NBA Draft 2026: Top 10 Prospects Deep Dive",
-    date: "Jan 3, 2025",
-    category: "Draft Coverage",
-    tier: "PRO",
-  },
-  {
-    title: "G-League Ignite: Rising Stars to Watch",
-    date: "Dec 28, 2024",
-    category: "Scouting Report",
-    tier: "PRO",
-  },
-  {
-    title: "International Prospects: European Tour Report",
-    date: "Dec 22, 2024",
-    category: "International",
-    tier: "PRO",
-  },
-  {
-    title: "Weekly Roundup: Stock Risers & Fallers",
-    date: "Dec 20, 2024",
-    category: "Analysis",
-    tier: "FREE",
-  },
-  {
-    title: "Cooper Flagg: The #1 Pick Breakdown",
-    date: "Dec 15, 2024",
-    category: "Player Spotlight",
-    tier: "PRO",
-  },
-];
+import useSiteContent from "@/hooks/useSiteContent";
 
 const ContentPreview = () => {
+  const { content, loading } = useSiteContent();
+
+  if (loading || !content) {
+    return (
+      <section className="py-24 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="animate-pulse text-muted-foreground">Loading...</div>
+        </div>
+      </section>
+    );
+  }
+
+  const { contentPreview, global } = content;
+
   return (
     <section className="py-24 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -49,11 +29,11 @@ const ContentPreview = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
-            Sample Reports
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4 break-words">
+            {contentPreview.sectionTitle}
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            A preview of the scouting intel available to Pro subscribers.
+            {contentPreview.sectionSubtitle}
           </p>
         </motion.div>
 
@@ -65,7 +45,7 @@ const ContentPreview = () => {
           transition={{ duration: 0.5 }}
           className="dashboard-card overflow-hidden"
         >
-          {reports.map((report, index) => (
+          {contentPreview.reports.map((report, index) => (
             <motion.div
               key={report.title}
               initial={{ opacity: 0, x: -20 }}
@@ -73,7 +53,7 @@ const ContentPreview = () => {
               viewport={{ once: true }}
               transition={{ delay: index * 0.05, duration: 0.3 }}
               className={`flex items-center justify-between p-5 hover:bg-secondary/50 transition-colors ${
-                index !== reports.length - 1 ? "border-b border-border" : ""
+                index !== contentPreview.reports.length - 1 ? "border-b border-border" : ""
               }`}
             >
               <div className="flex items-center gap-4 flex-1 min-w-0">
@@ -119,7 +99,7 @@ const ContentPreview = () => {
                       : "border-border"
                   }
                 >
-                  <a href={SUBSTACK_URL} target="_blank" rel="noopener noreferrer">
+                  <a href={global.substackUrl} target="_blank" rel="noopener noreferrer">
                     {report.tier === "PRO" ? "Unlock" : "Read"}
                   </a>
                 </Button>
@@ -141,8 +121,8 @@ const ContentPreview = () => {
             size="lg"
             className="bg-primary text-primary-foreground hover:bg-primary/90 glow-primary px-8 h-12 font-semibold"
           >
-            <a href={SUBSTACK_URL} target="_blank" rel="noopener noreferrer">
-              View All Reports
+            <a href={global.substackUrl} target="_blank" rel="noopener noreferrer">
+              {contentPreview.viewAllText}
               <ArrowRight className="ml-2 w-5 h-5" />
             </a>
           </Button>
