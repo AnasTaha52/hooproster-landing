@@ -2,12 +2,12 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
-
-const SUBSTACK_URL = "https://hooproster.substack.com";
+import useSiteContent from "@/hooks/useSiteContent";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { content, loading } = useSiteContent();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,6 +25,18 @@ const Header = () => {
     }
   };
 
+  if (loading || !content) {
+    return (
+      <header className="fixed top-0 left-0 right-0 z-50 py-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="h-12 animate-pulse bg-muted/20 rounded-lg" />
+        </div>
+      </header>
+    );
+  }
+
+  const { global } = content;
+
   return (
     <>
       <header
@@ -39,9 +51,11 @@ const Header = () => {
             {/* Logo */}
             <a href="/" className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm">H</span>
+                <span className="text-primary-foreground font-bold text-sm">
+                  {global.siteName.charAt(0)}
+                </span>
               </div>
-              <span className="text-xl font-bold tracking-tight">HOOPROSTER</span>
+              <span className="text-xl font-bold tracking-tight">{global.siteName}</span>
             </a>
 
             {/* Desktop Navigation */}
@@ -66,7 +80,7 @@ const Header = () => {
                 asChild
                 className="bg-primary text-primary-foreground hover:bg-primary/90 glow-primary px-6 font-semibold"
               >
-                <a href={SUBSTACK_URL} target="_blank" rel="noopener noreferrer">
+                <a href={global.substackUrl} target="_blank" rel="noopener noreferrer">
                   Subscribe
                 </a>
               </Button>
@@ -109,7 +123,7 @@ const Header = () => {
                 asChild
                 className="mt-2 bg-primary text-primary-foreground hover:bg-primary/90 font-semibold"
               >
-                <a href={SUBSTACK_URL} target="_blank" rel="noopener noreferrer">
+                <a href={global.substackUrl} target="_blank" rel="noopener noreferrer">
                   Subscribe
                 </a>
               </Button>
