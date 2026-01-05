@@ -1,4 +1,4 @@
-# Welcome to your Lovable project
+# Welcome to HoopRoster - Substack Project
 
 **Use your preferred IDE**
 
