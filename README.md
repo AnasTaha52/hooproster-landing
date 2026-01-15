@@ -45,3 +45,30 @@ This project is built with:
 - React
 - shadcn-ui
 - Tailwind CSS
+- Sanity CMS (for content management)
+- Supabase (optional)
+
+## Deployment
+
+### Deploy to Vercel
+
+This project is configured for deployment on Vercel with Sanity CMS integration.
+
+**📖 For detailed deployment instructions, see [VERCEL_DEPLOYMENT.md](./VERCEL_DEPLOYMENT.md)**
+
+**Quick Steps:**
+1. Push your code to GitHub/GitLab/Bitbucket
+2. Import project in [Vercel Dashboard](https://vercel.com/new)
+3. Add environment variables (see deployment guide)
+4. Deploy!
+
+**Required Environment Variables:**
+- `VITE_SANITY_PROJECT_ID` - Your Sanity project ID
+- `VITE_SANITY_DATASET` - Your Sanity dataset name (usually "production")
+- `VITE_SANITY_API_TOKEN` - Optional but recommended (Sanity read token)
+
+## Setup Guides
+
+- **[SANITY_SETUP.md](./SANITY_SETUP.md)** - How to set up Sanity CMS
+- **[VERCEL_DEPLOYMENT.md](./VERCEL_DEPLOYMENT.md)** - Complete Vercel deployment guide
+- **[DEBUG_SANITY.md](./DEBUG_SANITY.md)** - Troubleshooting Sanity connection issues
