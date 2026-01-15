@@ -36,8 +36,8 @@ build
 *.sw?
 
 # Sanity Studio
-studio-hoopster-landing-page/.sanity
-studio-hoopster-landing-page/dist
+# studio-hoopster-landing-page/.sanity
+# studio-hoopster-landing-page/dist
 
 # OS files
 Thumbs.db
