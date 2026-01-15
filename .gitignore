@@ -17,12 +17,12 @@ dist-ssr
 build
 
 # Environment variables (CRITICAL - contains API keys and secrets)
-# .env
-# .env.local
-# .env.development.local
-# .env.test.local
-# .env.production.local
-# *.local
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.local
 
 # Editor directories and files
 .vscode/*
@@ -36,8 +36,8 @@ build
 *.sw?
 
 # Sanity Studio
-# studio-hoopster-landing-page/.sanity
-# studio-hoopster-landing-page/dist
+studio-hoopster-landing-page/.sanity
+studio-hoopster-landing-page/dist
 
 # OS files
 Thumbs.db
