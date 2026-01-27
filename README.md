@@ -2,7 +2,7 @@
 
 **Use your preferred IDE**
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+If you want to work locally using your own IDE, you can clone this repo and push changes.
 
 The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
@@ -57,12 +57,14 @@ This project is configured for deployment on Vercel with Sanity CMS integration.
 **📖 For detailed deployment instructions, see [VERCEL_DEPLOYMENT.md](./VERCEL_DEPLOYMENT.md)**
 
 **Quick Steps:**
+
 1. Push your code to GitHub/GitLab/Bitbucket
 2. Import project in [Vercel Dashboard](https://vercel.com/new)
 3. Add environment variables (see deployment guide)
 4. Deploy!
 
 **Required Environment Variables:**
+
 - `VITE_SANITY_PROJECT_ID` - Your Sanity project ID
 - `VITE_SANITY_DATASET` - Your Sanity dataset name (usually "production")
 - `VITE_SANITY_API_TOKEN` - Optional but recommended (Sanity read token)
